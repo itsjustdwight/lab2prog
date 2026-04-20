@@ -8,7 +8,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <unistd.>
+#include <unistd.h>
 
 #include "networks.h"
 #include "safeUtil.h"
@@ -24,7 +24,7 @@
 
 void server_control(int main_server_socket);
 void add_new_socket(int main_server_socket);
-void process_clien(int client_socket);
+void process_client(int client_socket);
 int check_args(int argc, char *argv[]);
 
 /*-----------> Main <-----------*/
@@ -56,7 +56,7 @@ void server_control (int main_server_socket) {
 	    add_new_socket(main_server_socket);
 	}
 	else { // current client has its data sent (or closed its side)
-	    process_clien(ready_socket);
+	    process_client(ready_socket);
 	}
     }
 }
@@ -65,7 +65,7 @@ void server_control (int main_server_socket) {
 void add_new_socket(int main_server_socket) {
     int client_socket = 0; // socket fd for recent accepted clients
 
-    client_socket = tcpAccept(main_server_socjet, DEBUG_FLAG); // accept will print client's info
+    client_socket = tcpAccept(main_server_socket, DEBUG_FLAG); // accept will print client's info
     addToPollSet(client_socket); // adding to poll set so future data from this client notifies pollCall()
 }
 
@@ -86,7 +86,7 @@ void process_client(int client_socket) {
     else {
     	printf("Connection closed by client on socket %d\n", client_socket);
 	removeFromPollSet(client_socket); // remove before closing
-	close(client_Socket); // free the socket fd, server will keep running
+	close(client_socket); // free the socket fd, server will keep running
     }
 }
 

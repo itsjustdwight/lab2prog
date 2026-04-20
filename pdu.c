@@ -21,7 +21,7 @@ int sendPDU(int socketNumber, uint8_t *dataBuffer, int lengthOfData) {
 
     memcpy(pdu_buf, &pdu_len_network, PDU_HEADER_LEN); // writing 2 byte header into buffer
 
-    memcpy(pdu_buff + PDU_HEADER_LEN, dataBuffer, lengthOfData); // writing data after the header
+    memcpy(pdu_buf + PDU_HEADER_LEN, dataBuffer, lengthOfData); // writing data after the header
 
     // sending full PDU in one send() call where safeSend() will handle all errors internally
     int bytes_sent = safeSend(socketNumber, pdu_buf, pdu_len, 0);

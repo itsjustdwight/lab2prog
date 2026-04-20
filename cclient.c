@@ -8,7 +8,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <unistd.>
+#include <unistd.h>
 
 #include "networks.h"
 #include "safeUtil.h"
@@ -95,7 +95,7 @@ int read_from_stdin(uint8_t *buffer) {
     int a_char = 0; // to detect EOF which is -1 (int)
     int input_len = 0;
 
-    buf[0] = '\0'; // start with empty string
+    buffer[0] = '\0'; // start with empty string
     printf("Enter data: ");
     fflush(stdout); 
     while (input_len < (MAXBUF - 1) && a_char != '\n') {
@@ -104,12 +104,12 @@ int read_from_stdin(uint8_t *buffer) {
 	    exit(0);
 	}
 	if (a_char != '\n') {
-	    buf[input_len] = (char)a_char;
+	    buffer[input_len] = (char)a_char;
 	    input_len++;
 	}
     }
 
-    buf[input_len] = '\0'; // null terminator for safe printing
+    buffer[input_len] = '\0'; // null terminator for safe printing
     input_len++; // include null terminator in byte count thats sent
 
     return input_len;
